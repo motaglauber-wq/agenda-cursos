@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agenda 2027</title>
+<meta name="theme-color" content="#1F3864">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;background:#F5F6FA;color:#16213A;font-family:system-ui,sans-serif;text-align:center}
+img{width:96px;height:96px;border-radius:22px}
+h1{margin:0;font-size:1.4rem;color:#1F3864}
+.b{display:block;width:100%;max-width:320px;padding:14px;border:0;border-radius:12px;font:inherit;font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none}
+.p{background:#1F3864;color:#fff}.s{background:#F2C94C;color:#1F3864}
+p{margin:0;color:#5E6782;font-size:.95rem;max-width:320px}
+</style>
+</head>
+<body>
+<img src="icon-192.png" alt="">
+<h1>Agenda de Cursos 2027</h1>
+<a class="b p" id="abrir" href="https://script.google.com/macros/s/AKfycbwkCMz70FP82zV_8RJRgAp8CFSjvfK2BUv3v5ipZRg-2eW9laIgDk_c13Ro7UAFiPsE9Q/exec">Abrir agenda</a>
+<button class="b s" id="inst" hidden>Instalar app no celular</button>
+<p id="dica">Para instalar: no Chrome, toque em ⋮ e depois em <b>Instalar app</b> (ou <b>Adicionar à tela inicial</b>).</p>
+<script>
+const APP="https://script.google.com/macros/s/AKfycbwkCMz70FP82zV_8RJRgAp8CFSjvfK2BUv3v5ipZRg-2eW9laIgDk_c13Ro7UAFiPsE9Q/exec";
+const app=matchMedia("(display-mode: standalone)").matches||new URLSearchParams(location.search).has("app");
+if(app)location.replace(APP);
+let ev=null;
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();ev=e;document.getElementById("inst").hidden=false});
+document.getElementById("inst").onclick=async()=>{if(!ev)return;ev.prompt();await ev.userChoice;ev=null;document.getElementById("inst").hidden=true};
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
